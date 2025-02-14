@@ -53,9 +53,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, TableUser> implemen
 
     @Override
     public int delete(long userId) {
-        //delete from table_user where id = {$id}
+        //delete from table_user where id = {$id}U
         QueryWrapper<TableUser> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id",userId);
         return getBaseMapper().delete(queryWrapper);
+    }
+
+    @Override
+    public List<TableUser> queryFans(long userId, int offset, int pageCount) {
+        return getBaseMapper().queryFans(userId,offset,pageCount);
+    }
+
+    @Override
+    public List<TableUser> queryFollows(long userId, int offset, int pageCount) {
+        return getBaseMapper().queryFollows(userId,offset,pageCount);
     }
 }

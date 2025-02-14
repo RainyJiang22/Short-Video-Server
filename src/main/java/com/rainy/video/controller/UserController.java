@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author Jacky
  * @date 2025/2/12
@@ -61,7 +63,8 @@ public class UserController {
 
         int success = userService.insert(user);
         String result;
-        if(success == 1) result="用户插入成功"; else result = "用户插入失败";
+        if (success == 1) result = "用户插入成功";
+        else result = "用户插入失败";
         return result;
     }
 
@@ -114,4 +117,37 @@ public class UserController {
 
         return response.toString();
     }
+
+    @RequestMapping(value = "queryFans", method = RequestMethod.GET)
+    @ApiOperation(value = "查询粉丝列表", notes = "查询粉丝列表")
+    @JsonView(User.class)
+    public String queryFans(@RequestParam(value = "userId", defaultValue = "0") Long userId,
+                            @RequestParam(value = "page", defaultValue = "0") Integer page,
+                            @RequestParam(value = "pageCount", defaultValue = "10", required = false) Integer pageCount) {
+        ApiResponse<List<TableUser>> response = new ApiResponse<>();
+        if (userId == 0) {
+            response.setData(null);
+            return response.toString();
+        }
+        List<TableUser> users = userService.queryFans(userId, pageCount * page, pageCount);
+        response.setData(users);
+        return response.toString();
+    }
+
+    @RequestMapping(value = "queryFollows", method = RequestMethod.GET)
+    @ApiOperation(value = "查询关注列表", notes = "查询关注列表")
+    @JsonView(User.class)
+    public String queryFollows(@RequestParam(value = "userId", defaultValue = "0") Long userId,
+                               @RequestParam(value = "page", defaultValue = "0") Integer page,
+                               @RequestParam(value = "pageCount", defaultValue = "10", required = false) Integer pageCount) {
+        ApiResponse<List<TableUser>> response = new ApiResponse<>();
+        if (userId == 0) {
+            response.setData(null);
+            return response.toString();
+        }
+        List<TableUser> users = userService.queryFollows(userId, pageCount * page, pageCount);
+        response.setData(users);
+        return response.toString();
+    }
+
 }

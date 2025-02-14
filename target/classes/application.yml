@@ -1,5 +1,5 @@
 server:
-  port: 9996
+  port: 9991
   servlet:
     context-path: /video
 
