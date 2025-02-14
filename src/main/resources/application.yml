@@ -1,0 +1,21 @@
+server:
+  port: 9996
+  servlet:
+    context-path: /video
+
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/video?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
