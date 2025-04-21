@@ -12,3 +12,6 @@ Jetpack+Compose打造一款短视频APP服务端 SpringBoot
 - [GET] localhost:9996/video/user/queryFans(查询粉丝列表)
 - [GET] localhost:9996/video/user/relation(查询两个用户的关系)
 - [POST] localhost:9996/video/user/update (更新用户信息)
+
+#### FeedsController
+- [GET] localhost:9996/video/feeds/queryHotFeedsList (查询贴子列表数据)
