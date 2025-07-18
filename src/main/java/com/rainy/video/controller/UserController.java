@@ -8,6 +8,7 @@ import com.rainy.video.table.User;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -117,6 +118,38 @@ public class UserController {
 
         return response.toString();
     }
+
+
+    @RequestMapping(value = "delete", method = RequestMethod.GET)
+    @ApiOperation(value = "删除用户", notes = "根据id删除用户")
+    @JsonView(value = Boolean.class)
+    public ApiResponse<Boolean> deleteUser(@RequestParam(value = "userId") long userId) {
+        ApiResponse<Boolean> response = new ApiResponse<>();
+        int result = userService.delete(userId);
+        if (result >= 1) {
+            response.setData(true);
+        } else {
+            response.setData(false);
+        }
+        return response;
+    }
+
+
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    @ApiOperation(value="更新用户信息", notes = "根据id来更新用户信息")
+    @JsonView(value = Boolean.class)
+    public ApiResponse<Boolean> update(@RequestParam TableUser user, BindingResult binding) {
+        ApiResponse<Boolean> response = new ApiResponse<>();
+        int result = userService.update(user);
+        if (result >= 1) {
+            response.setData(true);
+        } else {
+            response.setData(false);
+        }
+        return response;
+
+    }
+
 
     @RequestMapping(value = "queryFans", method = RequestMethod.GET)
     @ApiOperation(value = "查询粉丝列表", notes = "查询粉丝列表")
