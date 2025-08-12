@@ -134,5 +134,33 @@ public class CommonController {
     }
 
 
+    @ApiOperation(value = "删除帖子的一条评论")
+    @RequestMapping(value = "deleteComment", method = RequestMethod.GET)
+    public ApiResponse<Boolean> deleteComment(@RequestParam(value = "itemId", defaultValue = "0") Long itemId,
+                                              @RequestParam(value = "userId", defaultValue = "0") Long userId,
+                                              @RequestParam(value = "commentId", defaultValue = "0") Long commentId) {
+
+        ApiResponse<Boolean> response = new ApiResponse<>();
+        if (itemId == null || commentId == null) {
+            response.setResult(ApiResponse.STATUS_FAILED, "commentId|itemId不能为空");
+            return response;
+        }
+
+        int result = commentService.deleteComment(itemId, commentId, userId);
+        ugcService.increaseCommentCount(itemId, -1);
+
+        TableUser user = userService.queryUser(userId);
+        if (user != null) {
+            user.commentCount = user.commentCount - 1;
+            userService.update(user);
+        }
+
+        if (result > 0) {
+            response.setData("result", true);
+        } else {
+            response.setData("result", false);
+        }
+        return response;
+    }
 
 }
