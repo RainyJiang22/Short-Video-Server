@@ -25,3 +25,6 @@ Jetpack+Compose打造一款短视频帖子APP服务端 SpringBoot
 - [GET] video/feeds/deleteFeed(删除一条帖子)
 - [GET] video/feeds/queryHistory(查询用户帖子历史观看记录)
 - [GET] video/feeds/queryFavorite(查询用户帖子收藏记录)
+
+#### CommonController
+``

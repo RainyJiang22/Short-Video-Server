@@ -1,18 +1,15 @@
 package com.rainy.video;
 
-
+import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.io.Serializable;
+
 
 /**
  * @author Jacky
  * @date 2024/12/6
  **/
-
-@JsonIgnoreProperties({"responseBody"})
 public class ApiResponse<T> implements Serializable {
     public static final int STATUS_SUCCESS = 200;
     public static final int STATUS_FAILED = 0;
@@ -41,9 +38,12 @@ public class ApiResponse<T> implements Serializable {
         return data;
     }
 
+    /**
+     * 只在后端使用，不参与序列化
+     */
+    @JSONField(serialize = false)
     public T getResponseBody() {
-        return data.getObject("data", new TypeReference<T>() {
-        }.getType());
+        return data.getObject("data", new TypeReference<T>() {}.getType());
     }
 
     public void setData(String objectKey, T data) {
