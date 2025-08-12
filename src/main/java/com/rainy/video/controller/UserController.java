@@ -33,12 +33,7 @@ public class UserController {
     public String query(@RequestParam(value = "userId") long userId) {
         ApiResponse<TableUser> response = new ApiResponse<>();
         TableUser user = userService.queryUser(userId);
-//        response.setData(user);
-        if (user != null) {
-            response.setSuccessResult(user);
-        } else {
-            response.setFailedResult("用户未找到");
-        }
+        response.setData(user);
         return response.toString();
     }
 

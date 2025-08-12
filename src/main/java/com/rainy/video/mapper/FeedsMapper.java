@@ -35,4 +35,61 @@ public interface FeedsMapper  extends BaseMapper<TableHotFeeds> {
     List<TableHotFeeds> queryNotHotFeeds(@Param("feedType") int feedType,
                                          @Param("id") int id,
                                          @Param("pageCount") int pageCount);
+
+    @Select("select * from table_hot_feeds,table_watch_history " +
+            "where table_watch_history.user_id =#{userId} " +
+            "and table_watch_history.item_id =table_hot_feeds.item_id " +
+            "order by table_watch_history.id desc limit #{pageCount} offset #{offset}")
+    List<TableHotFeeds> queryHistory(@Param("userId") Long userId,
+                                     @Param("offset") int offset,
+                                     @Param("pageCount") int pageCount);
+
+
+    @Select("select * from table_hot_feeds,table_ugc_like " +
+            "where table_ugc_like.user_id =#{userId} " +
+            "and table_ugc_like.has_favorite=1 " +
+            "AND table_hot_feeds.item_id = table_ugc_like.item_id " +
+            "order by table_ugc_like.id desc limit #{pageCount} offset #{offset}")
+    List<TableHotFeeds> queryFavorite(@Param("userId") Long userId,
+                                      @Param("offset") int offset,
+                                      @Param("pageCount") int pageCount);
+
+    @Select("SELECT * FROM table_hot_feeds,table_feeds_comment" +
+            "where table_feeds_comment.user_id=#{userId} " +
+            "and table_hot_feeds.author_id != #{userId} " +
+            "and table_hot_feeds.id > #{inId} " +
+            "order by table_hot_feeds.id desc limit #{pageCount}")
+    void queryCommentFeeds(@Param("userId") Long userId,
+                           @Param("pageCount") int pageCount,
+                           @Param("inId") int inId);
+
+    @Select(" SELECT * FROM table_hot_feeds where table_hot_feeds.author_id =#{userId} " +
+            "and table_hot_feeds.id > #{inId} " +
+            "order by table_hot_feeds.id desc limit #{pageCount}")
+    void queryUserFeeds(@Param("userId") Long userId,
+                        @Param("pageCount") int pageCount,
+                        @Param("inId") int inId);
+
+
+    @Select("SELECT distinct " +
+            "table_hot_feeds.id," +
+            "table_hot_feeds.item_id," +
+            "table_hot_feeds.item_type," +
+            "table_hot_feeds.create_time," +
+            "table_hot_feeds.duration," +
+            "table_hot_feeds.feeds_text," +
+            "table_hot_feeds.author_id," +
+            "table_hot_feeds.activity_text," +
+            "table_hot_feeds.activity_icon," +
+            "table_hot_feeds.video_width," +
+            "table_hot_feeds.video_height," +
+            "table_hot_feeds.video_url," +
+            "table_hot_feeds.video_cover " +
+            "FROM table_hot_feeds,table_feeds_comment " +
+            "where table_feeds_comment.user_id=#{userId} or table_hot_feeds.author_id =#{userId} " +
+            "and (table_hot_feeds.id > #{inId} or table_feeds_comment.id>${inId}) " +
+            "order by table_hot_feeds.id desc limit #{pageCount}")
+    List<TableHotFeeds> queryUserFeedsAndComments(@Param("userId") Long userId,
+                                                  @Param("pageCount") int pageCount,
+                                                  @Param("inId") int inId);
 }

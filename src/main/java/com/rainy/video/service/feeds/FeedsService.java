@@ -19,4 +19,19 @@ public interface FeedsService extends IService<TableHotFeeds> {
     List<TableHotFeeds> queryNotHotFeedsList(@Param("feedType") String feedType,
                                           @Param("inId") int id,
                                           @Param("pageCount") int pageCount);
+
+    boolean addFeed(@Param("feed") TableHotFeeds feed);
+
+    List<TableHotFeeds> queryProfileFeeds(@Param("userId") long userId,
+                                          @Param("pageCount") int pageCount,
+                                          @Param("profileType") String profileType,
+                                          @Param("inId") int inId);
+
+    int deleteFeed(@Param("itemId") long itemId);
+
+    TableHotFeeds queryFeed(@Param("itemId") long itemId);
+
+    List<TableHotFeeds> queryHistory(@Param("userId") Long userId, @Param("offset") int offset, @Param("pageCount") int pageCount);
+
+    List<TableHotFeeds> queryFavorite(@Param("userId") Long userId, @Param("offset") int offset, @Param("pageCount") int pageCount);
 }

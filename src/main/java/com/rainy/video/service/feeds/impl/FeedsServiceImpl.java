@@ -44,4 +44,45 @@ public class FeedsServiceImpl extends ServiceImpl<FeedsMapper, TableHotFeeds> im
         if (id == 0) id = Integer.MAX_VALUE;
         return getBaseMapper().queryNotHotFeeds(itemType, id, pageCount);
     }
+
+    @Override
+    public boolean addFeed(TableHotFeeds feed) {
+        return saveOrUpdate(feed);
+    }
+
+    @Override
+    public List<TableHotFeeds> queryProfileFeeds(long userId, int pageCount, String profileType, int inId) {
+        if (Objects.equals(profileType, "tab_feed")) {
+            getBaseMapper().queryUserFeeds(userId, pageCount, inId);
+        } else if (Objects.equals(profileType, "tab_comment")) {
+            getBaseMapper().queryCommentFeeds(userId, pageCount, inId);
+        } else {
+            return getBaseMapper().queryUserFeedsAndComments(userId, pageCount, inId);
+        }
+        return null;
+    }
+
+    @Override
+    public int deleteFeed(long itemId) {
+        QueryWrapper<TableHotFeeds> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("item_id", itemId);
+        return getBaseMapper().delete(queryWrapper);
+    }
+
+    @Override
+    public TableHotFeeds queryFeed(long itemId) {
+        QueryWrapper<TableHotFeeds> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("item_id", itemId);
+        return getBaseMapper().selectOne(queryWrapper);
+    }
+
+    @Override
+    public List<TableHotFeeds> queryHistory(Long userId, int offset, int pageCount) {
+        return getBaseMapper().queryHistory(userId, offset, pageCount);
+    }
+
+    @Override
+    public List<TableHotFeeds> queryFavorite(Long userId, int offset, int pageCount) {
+        return getBaseMapper().queryFavorite(userId, offset, pageCount);
+    }
 }
