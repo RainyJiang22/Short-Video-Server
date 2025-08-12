@@ -131,7 +131,7 @@ public class UserController {
 
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    @ApiOperation(value="更新用户信息", notes = "根据id来更新用户信息")
+    @ApiOperation(value = "更新用户信息", notes = "根据id来更新用户信息")
     @JsonView(value = Boolean.class)
     public ApiResponse<Boolean> update(@RequestParam TableUser user, BindingResult binding) {
         ApiResponse<Boolean> response = new ApiResponse<>();
@@ -149,33 +149,33 @@ public class UserController {
     @RequestMapping(value = "queryFans", method = RequestMethod.GET)
     @ApiOperation(value = "查询粉丝列表", notes = "查询粉丝列表")
     @JsonView(User.class)
-    public String queryFans(@RequestParam(value = "userId", defaultValue = "0") Long userId,
-                            @RequestParam(value = "page", defaultValue = "0") Integer page,
-                            @RequestParam(value = "pageCount", defaultValue = "10", required = false) Integer pageCount) {
+    public ApiResponse<List<TableUser>> queryFans(@RequestParam(value = "userId", defaultValue = "0") Long userId,
+                                                  @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                  @RequestParam(value = "pageCount", defaultValue = "10", required = false) Integer pageCount) {
         ApiResponse<List<TableUser>> response = new ApiResponse<>();
         if (userId == 0) {
             response.setData(null);
-            return response.toString();
+            return response;
         }
         List<TableUser> users = userService.queryFans(userId, pageCount * page, pageCount);
         response.setData(users);
-        return response.toString();
+        return response;
     }
 
     @RequestMapping(value = "queryFollows", method = RequestMethod.GET)
     @ApiOperation(value = "查询关注列表", notes = "查询关注列表")
     @JsonView(User.class)
-    public String queryFollows(@RequestParam(value = "userId", defaultValue = "0") Long userId,
-                               @RequestParam(value = "page", defaultValue = "0") Integer page,
-                               @RequestParam(value = "pageCount", defaultValue = "10", required = false) Integer pageCount) {
+    public ApiResponse<List<TableUser>> queryFollows(@RequestParam(value = "userId", defaultValue = "0") Long userId,
+                                                     @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                     @RequestParam(value = "pageCount", defaultValue = "10", required = false) Integer pageCount) {
         ApiResponse<List<TableUser>> response = new ApiResponse<>();
         if (userId == 0) {
             response.setData(null);
-            return response.toString();
+            return response;
         }
         List<TableUser> users = userService.queryFollows(userId, pageCount * page, pageCount);
         response.setData(users);
-        return response.toString();
+        return response;
     }
 
 }

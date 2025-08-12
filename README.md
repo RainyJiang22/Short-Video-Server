@@ -27,4 +27,15 @@ Jetpack+Compose打造一款短视频帖子APP服务端 SpringBoot
 - [GET] video/feeds/queryFavorite(查询用户帖子收藏记录)
 
 #### CommonController
-``
+
+- [GET] video/commend/queryFeedComments (查询帖子评论列表 可分页)
+- [POST] video/commend/addComment(增加一条帖子评论)
+- [GET] video/commend/deleteComment(删除一条帖子评论)
+
+#### TagListController
+
+- [GET] video/tag/queryTagList (查询标签列表数据)
+- [GET] video/tag/toggleTagFollow (变更对某个标签的喜欢)
+
+
+#### UgcController
