@@ -54,7 +54,7 @@ public class FeedsController {
     private void fillFeedsList(@RequestParam("userId") Long userId, List<TableHotFeeds> list) {
         for (TableHotFeeds feed: list) {
             if (feed == null) continue;
-            //todo
+
         }
     }
 }

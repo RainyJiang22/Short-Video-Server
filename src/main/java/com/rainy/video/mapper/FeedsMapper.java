@@ -20,9 +20,8 @@ public interface FeedsMapper  extends BaseMapper<TableHotFeeds> {
             "FROM table_hot_feeds,table_ugc " +
             "WHERE table_hot_feeds.item_id = table_ugc.item_id " +
             "and table_ugc.like_count>1000 and table_ugc.comment_count>500 " +
-            "and table_hot_feeds.id>#{id} " +
             "order by table_hot_feeds.id asc limit #{pageCount}")
-    List<TableHotFeeds> queryHotFeeds(@Param("feedType") String feedType,
+    List<TableHotFeeds> queryHotFeeds(@Param("feedType") int feedType,
                                       @Param("id") int id,
                                       @Param("pageCount") int pageCount);
 
@@ -31,7 +30,6 @@ public interface FeedsMapper  extends BaseMapper<TableHotFeeds> {
             "FROM table_hot_feeds " +
             "LEFT JOIN table_ugc ON table_hot_feeds.item_id = table_ugc.item_id " +
             "WHERE table_hot_feeds.item_type =#{feedType} " +
-            "and table_hot_feeds.id <#{id} " +
             "and table_ugc.item_id IS NULL OR table_ugc.like_count < 1000 " +
             "order by table_hot_feeds.id desc limit #{pageCount}")
     List<TableHotFeeds> queryNotHotFeeds(@Param("feedType") int feedType,
