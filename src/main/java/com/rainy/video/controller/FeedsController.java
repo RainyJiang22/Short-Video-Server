@@ -44,7 +44,7 @@ public class FeedsController {
     @ApiOperation(value = "查询帖子列表数据")
     @RequestMapping(value = "queryHotFeedsList", method = RequestMethod.GET)
     @JsonView(value = TableHotFeeds.class)
-    public String queryHotFeedsList(
+    public ApiResponse<List<TableHotFeeds>> queryHotFeedsList(
             @RequestParam(value = "feedType", required = false, defaultValue = "all") String feedType,
             @RequestParam(value = "userId", required = false, defaultValue = "0") Long userId,
             @RequestParam(value = "feedId", required = false, defaultValue = "0") Integer feedId,
@@ -57,7 +57,7 @@ public class FeedsController {
 
         ApiResponse<List<TableHotFeeds>> response = new ApiResponse<>();
         response.setResult(ApiResponse.STATUS_SUCCESS, null, feeds);
-        return response.toString();
+        return response;
     }
 
     @RequestMapping(value = "/queryProfileFeeds", method = RequestMethod.GET)

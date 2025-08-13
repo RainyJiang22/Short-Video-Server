@@ -17,20 +17,28 @@ import java.util.List;
 public interface FeedsMapper  extends BaseMapper<TableHotFeeds> {
 
     @Select("SELECT table_hot_feeds.* " +
-            "FROM table_hot_feeds,table_ugc " +
-            "WHERE table_hot_feeds.item_id = table_ugc.item_id " +
-            "and table_ugc.like_count>1000 and table_ugc.comment_count>500 " +
+            "FROM table_hot_feeds,table_feed_ugc " +
+            "WHERE table_hot_feeds.item_id = table_feed_ugc.item_id " +
+            "and table_feed_ugc.like_count>1000 and table_feed_ugc.comment_count>500 " +
             "order by table_hot_feeds.id asc limit #{pageCount}")
-    List<TableHotFeeds> queryHotFeeds(@Param("feedType") int feedType,
+    List<TableHotFeeds> queryHotFeeds(@Param("feedType") String feedType,
                                       @Param("id") int id,
                                       @Param("pageCount") int pageCount);
 
 
     @Select("SELECT table_hot_feeds.* " +
             "FROM table_hot_feeds " +
-            "LEFT JOIN table_ugc ON table_hot_feeds.item_id = table_ugc.item_id " +
+            "order by table_hot_feeds.id desc limit #{pageCount}")
+    List<TableHotFeeds> queryAllFeeds(@Param("feedType") int feedType,
+                                      @Param("id") int id,
+                                      @Param("pageCount") int pageCount);
+
+
+    @Select("SELECT table_hot_feeds.* " +
+            "FROM table_hot_feeds " +
+            "LEFT JOIN table_feed_ugc ON table_hot_feeds.item_id = table_feed_ugc.item_id " +
             "WHERE table_hot_feeds.item_type =#{feedType} " +
-            "and table_ugc.item_id IS NULL OR table_ugc.like_count < 1000 " +
+            "and (table_feed_ugc.item_id IS NULL OR table_feed_ugc.like_count < 1000) " +
             "order by table_hot_feeds.id desc limit #{pageCount}")
     List<TableHotFeeds> queryNotHotFeeds(@Param("feedType") int feedType,
                                          @Param("id") int id,
@@ -45,11 +53,11 @@ public interface FeedsMapper  extends BaseMapper<TableHotFeeds> {
                                      @Param("pageCount") int pageCount);
 
 
-    @Select("select * from table_hot_feeds,table_ugc_like " +
-            "where table_ugc_like.user_id =#{userId} " +
-            "and table_ugc_like.has_favorite=1 " +
-            "AND table_hot_feeds.item_id = table_ugc_like.item_id " +
-            "order by table_ugc_like.id desc limit #{pageCount} offset #{offset}")
+    @Select("select * from table_hot_feeds,table_feed_ugc_like " +
+            "where table_feed_ugc_like.user_id =#{userId} " +
+            "and table_feed_ugc_like.has_favorite=1 " +
+            "AND table_hot_feeds.item_id = table_feed_ugc_like.item_id " +
+            "order by table_feed_ugc_like.id desc limit #{pageCount} offset #{offset}")
     List<TableHotFeeds> queryFavorite(@Param("userId") Long userId,
                                       @Param("offset") int offset,
                                       @Param("pageCount") int pageCount);

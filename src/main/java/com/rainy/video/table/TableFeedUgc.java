@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 
 @ApiModel(value = "帖子互动对象")
-@Table(name = "table_ugc")
+@Table(name = "table_feed_ugc")
 @Entity
 @JsonIgnoreProperties({"id"})
 public class TableFeedUgc implements Serializable {
