@@ -65,7 +65,6 @@ public class UgcServiceImpl extends ServiceImpl<UgcMapper, TableFeedUgc> impleme
     public int increaseShareCount(long itemId) {
         TableFeedUgc tableFeedUgc = getTableFeedUgc(itemId);
         tableFeedUgc.shareCount += 1;
-        tableFeedUgc.commentCount += 1;
         saveOrUpdate(tableFeedUgc);
         return tableFeedUgc.shareCount;
     }

@@ -39,3 +39,18 @@ Jetpack+Compose打造一款短视频帖子APP服务端 SpringBoot
 
 
 #### UgcController
+
+- [GET] video//ugc/queryUgcByItemId (根据itemId查询段子的ugc属性)
+- [GET] video/ugc/increaseCommentCount (增加段子评论的数量)
+- [GET] video/ugc/toggleFavorite (收藏一个帖子)
+- [GET] video/ugc/increaseShareCount (增加一条段子分享的数量)
+- [GET] video/ugc/toggleFeedLike (变换用户对该条段子的喜欢结果)
+- [GET] video/ugc/isLiked (查询用户对该条段子的喜欢结果)
+- [GET] video/ugc/toggleTagListFollow (变换用户对该标签类型的喜欢结果)
+- [GET] video/ugc/hasFollowTag (查询用户对该标签类型的喜欢结果)
+- [GET] video/ugc/toggleCommentLike (变更用户对一条评论的喜欢状态)
+- [GET] video/ugc/isCommentLike (查询用户对一条评论的喜欢状态)
+- [GET] video/ugc/toggleUserFollow (变更用户对另一个用户的喜欢状态)
+- [GET] video/ugc/isUserFollow (查询用户对另一个用户的喜欢状态)
+- [GET] video/ugc/dissFeed (变更用户对一个帖子的diss状态)
+- [GET] video/ugc/hasDissFeed (查询用户对一个帖子的diss状态)
