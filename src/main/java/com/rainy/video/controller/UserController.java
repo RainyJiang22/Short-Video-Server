@@ -68,7 +68,7 @@ public class UserController {
     @ApiOperation(value = "插入新的用户", notes = "插入新的用户")
     @JsonView(User.class)
     @ResponseBody
-    public String insert(@RequestParam(value = "qqOpenId", required = true) String qqOpenId,
+    public ApiResponse<TableUser> insert(@RequestParam(value = "qqOpenId", required = true) String qqOpenId,
                          @RequestParam(value = "name", required = true) String name,
                          @RequestParam(value = "avatar", required = true) String avatar,
                          @RequestParam(value = "description", required = false, defaultValue = "") String description,
@@ -111,7 +111,7 @@ public class UserController {
         ApiResponse<TableUser> response = new ApiResponse<>();
         response.setData(tableUser);
 
-        return response.toString();
+        return response;
     }
 
 

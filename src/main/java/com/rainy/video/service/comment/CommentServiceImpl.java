@@ -27,7 +27,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, TableFeedsCom
         //  and like_count >= 100 limit 1;
         QueryWrapper<TableFeedsComment> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("item_id", itemId);
-        //queryWrapper.gt("like_count", 100);
+        queryWrapper.gt("like_count", 100);
         queryWrapper.last("limit 1");
         return getBaseMapper().selectOne(queryWrapper);
     }
