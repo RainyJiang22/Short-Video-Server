@@ -27,7 +27,7 @@ public class FeedsServiceImpl extends ServiceImpl<FeedsMapper, TableHotFeeds> im
         } else if (Objects.equals(feedType, "video")) {
             itemType = 2;
         }else {
-            List<TableHotFeeds> hotFeeds = getBaseMapper().queryHotFeeds(feedType, id, pageCount);
+            List<TableHotFeeds> hotFeeds = getBaseMapper().queryAllFeeds(itemType, id, pageCount);
             return hotFeeds;
         }
         if (id == 0) id = Integer.MAX_VALUE;
