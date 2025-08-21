@@ -22,7 +22,7 @@ public interface FeedsMapper  extends BaseMapper<TableHotFeeds> {
             "and table_feed_ugc.like_count>1000 and table_feed_ugc.comment_count>500 " +
             "order by table_hot_feeds.id asc limit #{pageCount}")
     List<TableHotFeeds> queryHotFeeds(@Param("feedType") String feedType,
-                                      @Param("id") int id,
+                                      @Param("id") long id,
                                       @Param("pageCount") int pageCount);
 
 
@@ -30,7 +30,7 @@ public interface FeedsMapper  extends BaseMapper<TableHotFeeds> {
             "FROM table_hot_feeds " +
             "order by table_hot_feeds.id desc limit #{pageCount}")
     List<TableHotFeeds> queryAllFeeds(@Param("feedType") int feedType,
-                                      @Param("id") int id,
+                                      @Param("id") long id,
                                       @Param("pageCount") int pageCount);
 
 
@@ -41,7 +41,7 @@ public interface FeedsMapper  extends BaseMapper<TableHotFeeds> {
             "and (table_feed_ugc.item_id IS NULL OR table_feed_ugc.like_count < 1000) " +
             "order by table_hot_feeds.id desc limit #{pageCount}")
     List<TableHotFeeds> queryNotHotFeeds(@Param("feedType") int feedType,
-                                         @Param("id") int id,
+                                         @Param("id") long id,
                                          @Param("pageCount") int pageCount);
 
     @Select("select * from table_hot_feeds,table_watch_history " +

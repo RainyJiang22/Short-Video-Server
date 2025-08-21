@@ -18,7 +18,7 @@ import java.util.Objects;
 @Service
 public class FeedsServiceImpl extends ServiceImpl<FeedsMapper, TableHotFeeds> implements FeedsService {
     @Override
-    public List<TableHotFeeds> queryHotFeedsList(String feedType, int id, int pageCount) {
+    public List<TableHotFeeds> queryHotFeedsList(String feedType, long id, int pageCount) {
         int itemType = -1;
         if (Objects.equals(feedType, "text")) {
             itemType = 0;
@@ -36,7 +36,7 @@ public class FeedsServiceImpl extends ServiceImpl<FeedsMapper, TableHotFeeds> im
     }
 
     @Override
-    public List<TableHotFeeds> queryNotHotFeedsList(String feedType, int id, int pageCount) {
+    public List<TableHotFeeds> queryNotHotFeedsList(String feedType, long id, int pageCount) {
         int itemType = -1;
         if (Objects.equals(feedType, "text")) {
             itemType = 0;

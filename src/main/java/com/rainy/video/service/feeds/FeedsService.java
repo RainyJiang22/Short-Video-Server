@@ -13,11 +13,11 @@ import java.util.List;
 public interface FeedsService extends IService<TableHotFeeds> {
 
     List<TableHotFeeds> queryHotFeedsList(@Param("feedType") String feedType,
-                                          @Param("inId") int id,
+                                          @Param("inId") long id,
                                           @Param("pageCount") int pageCount);
 
     List<TableHotFeeds> queryNotHotFeedsList(@Param("feedType") String feedType,
-                                          @Param("inId") int id,
+                                          @Param("inId") long id,
                                           @Param("pageCount") int pageCount);
 
     boolean addFeed(@Param("feed") TableHotFeeds feed);
