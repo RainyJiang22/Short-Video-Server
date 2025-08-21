@@ -47,7 +47,7 @@ public class FeedsController {
     public ApiResponse<List<TableHotFeeds>> queryHotFeedsList(
             @RequestParam(value = "feedType", required = false, defaultValue = "all") String feedType,
             @RequestParam(value = "userId", required = false, defaultValue = "0") Long userId,
-            @RequestParam(value = "feedId", required = false, defaultValue = "0") Long feedId,
+            @RequestParam(value = "feedId", required = false, defaultValue = "0") Integer feedId,
             @RequestParam(value = "pageCount", required = false, defaultValue = "10") Integer pageCount
     ) {
         List<TableHotFeeds> feeds = feedsService.queryHotFeedsList(feedType, feedId, pageCount);
