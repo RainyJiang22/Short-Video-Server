@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class TableHotFeeds implements Serializable {
     @Id
     @GeneratedValue
-    public int id;
+    public long id;
 
     @Column(name = "item_id")
     public long itemId;

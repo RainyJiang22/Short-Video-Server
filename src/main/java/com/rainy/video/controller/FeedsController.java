@@ -1,6 +1,7 @@
 package com.rainy.video.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.google.common.hash.HashCode;
 import com.rainy.video.ApiResponse;
 import com.rainy.video.service.comment.CommentService;
 import com.rainy.video.service.feeds.FeedsService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Jacky
@@ -83,8 +85,8 @@ public class FeedsController {
     @JsonView(value = TableHotFeeds.class)
     public ApiResponse<Object> publishFeed(@RequestParam(value = "feedType", required = false, defaultValue = "1") int feedType,
                                            @RequestParam(value = "userId", required = false, defaultValue = "0") Long userId,
-                                           @RequestParam(value = "coverUrl", required = false, defaultValue = "") String coverUrl,
-                                           @RequestParam(value = "fileUrl", required = false, defaultValue = "") String fileUrl,
+                                           @RequestParam(value = "coverUrl", required = false) String coverUrl,
+                                           @RequestParam(value = "fileUrl", required = false) String fileUrl,
                                            @RequestParam(value = "fileWidth", required = false, defaultValue = "0") int fileWidth,
                                            @RequestParam(value = "fileHeight", required = false, defaultValue = "0") int fileHeight,
                                            @RequestParam(value = "tagId", required = false, defaultValue = "0") long tagId,
@@ -92,8 +94,13 @@ public class FeedsController {
                                            @RequestParam(value = "feedText", required = false, defaultValue = "0") String feedText) {
 
         TableHotFeeds feed = new TableHotFeeds();
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        // 把UUID当成16进制数的一部分来解析
+        long value = Long.parseUnsignedLong(uuid.substring(0, 15), 16);
+        feed.id = value % 10_000_000L;
         feed.itemId = System.currentTimeMillis();
         feed.itemType = coverUrl != null && fileUrl != null ? 2 : (fileUrl != null ? 1 : 0);
+        System.out.println(feed.itemType);
         feed.authorId = userId;
         if (fileUrl != null) {
             if (fileUrl.endsWith(".mp4")) {
